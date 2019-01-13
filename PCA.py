@@ -24,7 +24,7 @@ from sklearn.decomposition import PCA
 pca = PCA(n_components=None) # Execute the below and decide no. of components
 # Note: Restart the kernel after deciding the components
 X_train = pca.fit_transform(X_train)
-X_test = pca.fit_transform(X_test)
+X_test = pca.transform(X_test)
 explained_variance = pca.explained_variance_ratio_
 
 # Fitting Logistic Regression
