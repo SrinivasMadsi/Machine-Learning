@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<item gdwTed="840" gdwMcdGcatIdNu="678" gdwFileId="345"  wBusinessDate="20190301"> 
+<Info takeoutTax="1223" takeoutPrice="0.69" eatinTax="1223" eatPrice="0.69" name="Colombia" direction="E" shortNm="Hola" id="1">
+<Pram v1="xcvsd" name="BiName"/>
+<Pram v1="12345" name="Cat"/>
+<Pram v1="er_23" name="Dummy1"/>
+<Pram v1="false" name="Dummy2"/>
+<Pram v1="True" name="Dummy3"/>
+<Pram v1="bhg" name="Dummy4"/>
+<New Brand="" p1="a|b|c|d"/>
+<showme xyz ="ABC" comment="Yes" summary="No"/>
+<select>
+	<slot code ="0" value ="1"/>
+	<slot code ="1" value ="2"/>
+</select>
+</Info>
+<Info takeoutTax="1223" takeoutPrice="0.75" eatinTax="1223" eatPrice="0.75" name="Singapore" direction="W" shortNm="Kola" id="2">
+<Pram v1="an_24" name="Dummy5"/>
+<Pram v1="78_ab" name="Dummy6"/>
+<Pram v1="nkj" name="Dummy7"/>
+<New Brand="" p1="p|q|r|s|t"/>
+<showme xyz ="ABC1" comment="No" summary="Yes"/>
+<select>
+	<slot code ="126" value ="4"/>
+</select>
+</Info>
+<Info takeoutTax="1223" takeoutPrice="0.89" eatinTax="1223" eatPrice="0.89" name="Malay" direction="N" shortNm="Bola" id="3">
+<Pram v1="True" name="Dummy9"/>
+<Pram v1="rty" name="Dummy10"/>
+<New Brand="" p1="a|b|c|d"/>
+<showme xyz ="ABC2" comment="Yes" summary="No"/>
+<Ramp Priority ="1" group ="Dressing">
+	<Nm>"Dressing"</Nm>
+	<An>"Choose Dressing"</An>
+</Ramp>
+</Info>
+
+</item>
+
+
+
+####################################################################################################33
+import xml.etree.ElementTree as ET 
+tree = ET.parse('C:/Users/srinivas.madsi/Desktop/filereference.xml')
+root = tree.getroot()
+
+allinfo = []
+
+for item in root.findall('./Info'):
+    info_attrs = {}
+    pram = []
+    sort = []
+    info_attrs[item.tag]=item.attrib
+    for child in item:
+        if child.tag == 'Pram':
+            pram.append(child.attrib)
+        elif child.tag == 'select':
+            for c in child:
+                sort.append(c.attrib)
+        else:
+            info_attrs["Pram"]=pram
+            info_attrs[child.tag]=child.attrib
+            info_attrs["select"]=sort
+    allinfo.append(info_attrs) 
+ 
+
+info2 = pd.DataFrame.from_dict(allinfo)
+
+info2.to_csv('filereference.csv',index=False)
+
+
+
+
+
+
+
+
